@@ -1,38 +1,293 @@
-﻿* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: Arial, sans-serif; background: #f5f5f5; color: #222; }
+﻿/* =========================================
+   BASE Y RESET
+   ========================================= */
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
 
-.hola-topbar { background: #1a2a4a; padding: 14px 28px; display: flex; align-items: center; gap: 16px; }
-.tito-logo { width: 60px; height: 60px; background: #cc3300; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.tito-logo svg { width: 32px; height: 32px; fill: white; }
-.nose-titulo h1 { font-size: 19px; font-style: italic; font-weight: bold; color: white; letter-spacing: 0.4px; }
-.nose-titulo p { font-size: 12px; color: #99aacc; margin-top: 4px; }
+body { 
+  font-family: Arial, sans-serif; 
+  background: #f5f5f5; 
+  color: #222; 
+}
 
-.tito-nav { background: #16243c; display: flex; padding: 0 28px; flex-wrap: wrap; }
-.tito-nav a { color: #bbc8e0; font-size: 13px; padding: 11px 16px; text-decoration: none; border-bottom: 3px solid transparent; }
-.tito-nav a:hover { color: white; border-bottom: 3px solid #cc3300; }
+/* =========================================
+   BARRA SUPERIOR (HEADER)
+   ========================================= */
 
-.pepo-nav { background: #cc3300; display: flex; flex-wrap: wrap; }
-.pepo-nav a { color: white; font-size: 12px; font-weight: bold; padding: 11px 20px; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px; border-right: 1px solid #aa2200; }
-.pepo-nav a:hover { background: #aa2200; }
+.first-topbar { 
+  background: #1a2a4a; 
+  padding: 8px 28px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; /* Empuja el login a la derecha */
+  border-bottom: 3px solid #cc3300; 
+  width: 100%;
+  box-sizing: border-box;
+}
 
-.dado-migas { padding: 10px 28px; font-size: 13px; color: #888; background: white; border-bottom: 1px solid #e0e0e0; }
-.dado-migas a { color: #cc3300; text-decoration: none; }
+/* Contenedor para agrupar logo y texto a la izquierda */
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 
-.hola-hero { background: #1a2a4a; color: white; padding: 40px 28px; border-bottom: 4px solid #cc3300; }
-.hola-hero h2 { font-size: 28px; font-weight: bold; margin-bottom: 10px; }
-.hola-hero p { font-size: 14px; color: #aab8cc; max-width: 600px; line-height: 1.6; }
+.tito-logo { 
+  width: 70px; 
+  height: 70px; 
+  background: transparent; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  flex-shrink: 0; 
+}
 
-.nose-contenido { padding: 28px; max-width: 900px; }
+.tito-logo img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: contain; 
+}
 
-.tito-cards { display: flex; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
-.pepo-card { background: white; border: 1px solid #ddd; border-top: 4px solid #cc3300; padding: 20px; flex: 1; min-width: 180px; }
-.pepo-card h3 { font-size: 15px; font-weight: bold; color: #1a2a4a; margin-bottom: 8px; }
-.pepo-card p { font-size: 13px; color: #555; line-height: 1.6; }
+/* Estilos del Botón de Inicio de Sesión */
+.topbar-login {
+  display: flex;
+  align-items: center;
+}
 
-.dado-texto { background: white; border: 1px solid #ddd; padding: 28px; margin-bottom: 20px; }
-.dado-texto h3 { font-size: 18px; font-weight: bold; color: #1a2a4a; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #cc3300; display: inline-block; }
-.dado-texto p { font-size: 14px; line-height: 1.8; color: #444; margin-bottom: 14px; }
-.hola-resalta { color: #cc3300; font-weight: bold; }
+.btn-login {
+  background: transparent;
+  border: 1px solid #6998f7ff;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
 
-.nose-cta { background: #cc3300; color: white; display: inline-block; padding: 12px 30px; font-size: 14px; font-weight: bold; margin-top: 8px; text-decoration: none; border-radius: 3px; }
-.nose-cta:hover { background: #aa2200; }
+.btn-login:hover {
+  background: #6998f7ff;
+  color: #1a2a4a;
+}
+
+.icon-user {
+  font-size: 18px;
+}
+
+.topbar-titulo h1 { 
+  font-size: 20px; 
+  font-style: italic; 
+  font-weight: bold; 
+  color: white; 
+  margin: 0; 
+}
+
+.topbar-titulo p { 
+  font-size: 12px; 
+  color: #6998f7ff; 
+  margin-top: 2px; 
+  text-transform: uppercase;
+}
+
+/* =========================================
+   NAVEGACIÓN VERTICAL (IZQUIERDA)
+   ========================================= */
+.tito-nav { 
+  background: #16243c; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: flex-start;
+  padding: 10px 0; 
+  
+  position: absolute; 
+  left: 0;
+  z-index: 100;
+  width: 180px;       /* Ancho fijo de la barra */
+  height: auto;       /* Solo crece según el número de botones */
+}
+
+.tito-nav a { 
+  color: #bbc8e0; 
+  font-size: 13px; 
+  padding: 11px 16px; 
+  text-decoration: none; 
+  border-left: 3px solid transparent; 
+  display: block; 
+  width: 100%; 
+}
+
+.tito-nav a:hover { 
+  color: white; 
+  border-left: 3px solid #cc3300; 
+}
+
+.tito-nav-footer {
+  margin-top: 35px; /* Empuja este div hacia el puro fondo de la barra */
+  width: 100%;
+  padding: 0px;    /* Espacio para que la imagen no toque los bordes si no quieres */
+  display: flex;
+  justify-content: center;
+}
+
+.tito-nav-footer img {
+  width: 100%;      /* Se ajusta al ancho de 180px */
+  height: auto;
+  border-radius: 4px; 
+  opacity: 0.6;     /* Un toque sutil para que no brille más que los botones */
+  filter: grayscale(30%); /* Opcional: para que combine con el estilo serio */
+}
+
+/* =========================================
+   CONTENEDOR PRINCIPAL (ESTRUCTURA)
+   ========================================= */
+.main-content {
+  margin-left: 180px; /* Desplaza el contenido a la derecha del nav */
+  min-height: 100vh;
+}
+
+/* =========================================
+   SECCIONES DENTRO DEL CONTENIDO
+   ========================================= */
+
+/* Nav secundaria (si la usas dentro del contenido) */
+.pepo-nav { 
+  background: #cc3300; 
+  display: flex; 
+  flex-wrap: wrap; 
+}
+
+.pepo-nav a { 
+  color: white; 
+  font-size: 12px; 
+  font-weight: bold; 
+  padding: 11px 20px; 
+  text-decoration: none; 
+  text-transform: uppercase; 
+  letter-spacing: 0.5px; 
+  border-right: 1px solid #aa2200; 
+}
+
+.pepo-nav a:hover { 
+  background: #aa2200; 
+}
+
+/* Migas de pan */
+.dado-migas { 
+  padding: 10px 28px; 
+  font-size: 13px; 
+  color: #888; 
+  background: white; 
+  border-bottom: 1px solid #e0e0e0; 
+}
+
+.dado-migas a { 
+  color: #cc3300; 
+  text-decoration: none; 
+}
+
+/* Hero / Principal */
+.hola-hero { 
+  background: #1a2a4a; 
+  color: white; 
+  padding: 40px 28px; 
+  border-bottom: 4px solid #cc3300; 
+}
+
+.hola-hero h2 { 
+  font-size: 28px; 
+  font-weight: bold; 
+  margin-bottom: 10px; 
+}
+
+.hola-hero p { 
+  font-size: 14px; 
+  color: #aab8cc; 
+  max-width: 600px; 
+  line-height: 1.6; 
+}
+
+/* Cuerpo de texto y tarjetas */
+.nose-contenido { 
+  padding: 28px; 
+  max-width: 100%; 
+}
+
+.tito-cards { 
+  display: flex; 
+  gap: 16px; 
+  margin-bottom: 28px; 
+  flex-wrap: wrap; 
+}
+
+.pepo-card { 
+  background: white; 
+  border: 1px solid #ddd; 
+  border-top: 4px solid #cc3300; 
+  padding: 20px; 
+  flex: 1; 
+  min-width: 180px; 
+}
+
+.pepo-card h3 { 
+  font-size: 15px; 
+  font-weight: bold; 
+  color: #1a2a4a; 
+  margin-bottom: 8px; 
+}
+
+.pepo-card p { 
+  font-size: 13px; 
+  color: #555; 
+  line-height: 1.6; 
+}
+
+.dado-texto { 
+  background: white; 
+  border: 1px solid #ddd; 
+  padding: 28px; 
+  margin-bottom: 20px; 
+}
+
+.dado-texto h3 { 
+  font-size: 18px; 
+  font-weight: bold; 
+  color: #1a2a4a; 
+  margin-bottom: 16px; 
+  padding-bottom: 8px; 
+  border-bottom: 2px solid #cc3300; 
+  display: inline-block; 
+}
+
+.dado-texto p { 
+  font-size: 14px; 
+  line-height: 1.8; 
+  color: #444; 
+  margin-bottom: 14px; 
+}
+
+.hola-resalta { 
+  color: #cc3300; 
+  font-weight: bold; 
+}
+
+.nose-cta { 
+  background: #cc3300; 
+  color: white; 
+  display: inline-block; 
+  padding: 12px 30px; 
+  font-size: 14px; 
+  font-weight: bold; 
+  margin-top: 8px; 
+  text-decoration: none; 
+  border-radius: 3px; 
+}
+
+.nose-cta:hover { 
+  background: #aa2200; 
+}
