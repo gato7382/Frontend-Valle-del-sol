@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function BarraSuperior() {
   return (
@@ -21,10 +22,10 @@ export default function BarraSuperior() {
 
       {/* LADO DERECHO: Inicio de Sesión */}
       <div className="topbar-login">
-        <button className="btn-login">
+        <Link to="/login" className="btn-login">
           <span className="icon-user">👤</span>
           <span>Iniciar Sesión</span>
-        </button>
+        </Link>
       </div>
 
     </div>
