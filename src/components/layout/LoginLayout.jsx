@@ -39,7 +39,7 @@ export default function LoginLayout() {
           <input
             type="email"
             id="email"
-            placeholder="tucorreo@ejemplo.com"
+            placeholder="tucorreo@gmail.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
