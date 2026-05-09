@@ -10,13 +10,6 @@ export default function NavegacionSuperior() {
       <Link to="/mapa">🗺️ Mapa</Link>
       <Link to="/alertas">🛎️ Alertas</Link>
       <Link to="/bomberos">🧯 Bomberos</Link>
-
-      <div className="tito-nav-footer">
-        <img 
-          src="/imgs/Gemini_Generated_Image_j5qpjmj5qpjmj5qp.png" 
-          alt="Decoración" 
-        />
-      </div>
     </nav>
   );
 }
