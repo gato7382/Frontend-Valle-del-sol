@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./Login.css";
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/Login.css";
 
 export default function LoginLayout() {
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ export default function LoginLayout() {
             <input
               type={showPwd ? "text" : "password"}
               id="password"
-              placeholder="introduce tu contraseña"
+              placeholder="inhresa tu contraseña"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -83,7 +83,7 @@ export default function LoginLayout() {
         </button>
 
         <p className="signup-row">
-          ¿No tienes cuenta? <a href="#">Regístrate gratis</a>
+          ¿No tienes cuenta? <a href="#">Regístrate </a>
         </p>
       </div>
     </div>

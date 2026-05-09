@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/page/home.jsx';
 import Inicio from './components/page/inicio.jsx';
 import LoginLayout from './components/layout/LoginLayout.jsx';
+import Register from './components/layout/RegistroLayout.jsx';
 
 // Aquí es donde definiremos qué se ve en las otras pestañas
 function App() {
@@ -9,6 +10,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<LoginLayout />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/" element={<Home />}>
           {/* Esta es la vista que ya tienes (Home) */}
           <Route index element={<Inicio />} />
