@@ -83,7 +83,7 @@ export default function LoginLayout() {
         </button>
 
         <p className="signup-row">
-          ¿No tienes cuenta? <a href="#">Regístrate </a>
+          ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
         </p>
       </div>
     </div>
