@@ -4,6 +4,7 @@ import Inicio from './components/page/inicio.jsx';
 import LoginLayout from './components/layout/LoginLayout.jsx';
 import Register from './components/layout/RegistroLayout.jsx';
 import Reportes from './components/page/Reportes.jsx';
+import Alertas from './components/page/Alertas.jsx'; // Importamos el nuevo componente
 
 // Aquí es donde definiremos qué se ve en las otras pestañas
 function App() {
@@ -18,7 +19,8 @@ function App() {
           {/* ACTIVAMOS las rutas. Por ahora les pondremos un texto para que no den error */}
           <Route path="reportes" element={<Reportes />} />
           <Route path="mapa" element={<div style={{padding: '40px'}}><h2>🗺️ Mapa de Emergencias</h2><p>Aquí cargaremos el mapa pronto.</p></div>} />
-          <Route path="alertas" element={<div style={{padding: '40px'}}><h2>🛎️ Panel de Alertas</h2><p>Listado de alarmas activas.</p></div>} />
+          {/* Conectamos la ruta de alertas al nuevo componente */}
+          <Route path="alertas" element={<Alertas />} />
           <Route path="bomberos" element={<div style={{padding: '40px'}}><h2>🧯 Personal de Bomberos</h2><p>Gestión de voluntarios.</p></div>} />
           
         </Route>
