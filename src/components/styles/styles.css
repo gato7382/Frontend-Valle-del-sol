@@ -76,6 +76,31 @@ body {
   color: #1a2a4a;
 }
 
+.btn-logout {
+  background: transparent;
+  border: 1px solid #ff6b6b;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+  background: #ff6b6b;
+  color: #1a2a4a;
+}
+
+.user-greeting {
+  color: white;
+  margin-right: 12px;
+  font-size: 14px;
+}
+
 .icon-user {
   font-size: 18px;
 }

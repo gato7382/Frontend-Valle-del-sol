@@ -1,7 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 export default function BarraSuperior() {
+  const { isAuthenticated, logout, user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
   return (
     <div className="first-topbar"> 
       
@@ -20,12 +29,21 @@ export default function BarraSuperior() {
         </div>
       </div>
 
-      {/* LADO DERECHO: Inicio de Sesión */}
+      {/* LADO DERECHO: Inicio de Sesión o Cerrar Sesión */}
       <div className="topbar-login">
-        <Link to="/login" className="btn-login">
-          <span className="icon-user">👤</span>
-          <span>Iniciar Sesión</span>
-        </Link>
+        {isAuthenticated ? (
+          <>
+            {user?.nombre && <span className="user-greeting">Hola, {user.nombre}</span>}
+            <button type="button" className="btn-logout" onClick={handleLogout}>
+              Cerrar sesión
+            </button>
+          </>
+        ) : (
+          <Link to="/login" className="btn-login">
+            <span className="icon-user">👤</span>
+            <span>Iniciar Sesión</span>
+          </Link>
+        )}
       </div>
 
     </div>
