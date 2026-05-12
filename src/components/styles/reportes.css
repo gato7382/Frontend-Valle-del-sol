@@ -148,6 +148,20 @@ textarea {
   margin-top: 14px;
 }
 
+/* ── MAPA ── */
+.mapa-hint {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.mapa-wrapper {
+  height: 400px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+
 @media (max-width: 760px) {
   .grid-2,
   .grid-3 {

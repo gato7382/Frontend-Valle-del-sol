@@ -1,7 +1,31 @@
 import { useState, useEffect } from 'react'
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
+import L from 'leaflet'
+import markerIcon from 'leaflet/dist/images/marker-icon.png'
+import markerShadow from 'leaflet/dist/images/marker-shadow.png'
 import reporteService from '../../services/reporteService'
 import { useAuth } from '../../context/AuthContext'
 import '../styles/reportes.css'
+
+const iconoDefault = new L.Icon({
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+})
+
+function ClickHandler({ onAgregar }) {
+  useMapEvents({
+    click(e) {
+      onAgregar({
+        id: Date.now(),
+        lat: e.latlng.lat,
+        lon: e.latlng.lng,
+      })
+    }
+  })
+  return null
+}
 
 const initialState = {
   fecha: '',
@@ -14,8 +38,9 @@ const initialState = {
 
 export default function Reportes() {
   const [form, setForm] = useState(initialState)
+  const [alertas, setAlertas] = useState([])
   const [loading, setLoading] = useState(false)
-  const { isAuthenticated } = useAuth() // Verificamos si hay usuario logueado
+  const { isAuthenticated } = useAuth()
 
   useEffect(() => {
     const now = new Date()
@@ -42,12 +67,19 @@ export default function Reportes() {
     })
   }
 
+  const agregarAlerta = (nueva) => {
+    setAlertas(prev => [...prev, nueva])
+  }
+
+  const eliminarAlerta = (id) => {
+    setAlertas(prev => prev.filter(a => a.id !== id))
+  }
+
   const handleGenerarReporte = async () => {
     if (!isAuthenticated) {
       alert('Debes iniciar sesión para generar un reporte.')
       return
     }
-
     if (!form.direccion.trim()) {
       alert('Por favor ingresa la dirección del incendio.')
       return
@@ -55,14 +87,11 @@ export default function Reportes() {
 
     setLoading(true)
     try {
-      // Llamamos al servicio para crear el reporte
       const nuevoReporte = await reporteService.crearReporte(form)
-
       alert(`¡Reporte #${nuevoReporte.id} creado con éxito! Estado: ${nuevoReporte.estado}`)
-      handleLimpiar() // Limpiamos el formulario tras éxito
-
+      handleLimpiar()
     } catch (error) {
-      console.error("Error al crear reporte:", error)
+      console.error('Error al crear reporte:', error)
       alert(error.message)
     } finally {
       setLoading(false)
@@ -130,12 +159,61 @@ export default function Reportes() {
           />
         </div>
 
+        {/* ── MAPA ── */}
+        <div className="field">
+          <label>🗺️ Mapa de focos — haz clic para marcar, abre el marcador para quitar</label>
+          <p className="mapa-hint">
+            {alertas.length === 0
+              ? 'Sin focos marcados aún.'
+              : `${alertas.length} foco(s) activo(s) en el mapa.`}
+          </p>
+          <div className="mapa-wrapper">
+            <MapContainer
+              center={[-33.6897, -71.2128]}
+              zoom={13}
+              style={{ height: '400px', width: '100%', borderRadius: '8px' }}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; OpenStreetMap contributors'
+              />
+              <ClickHandler onAgregar={agregarAlerta} />
+              {alertas.map(alerta => (
+                <Marker key={alerta.id} position={[alerta.lat, alerta.lon]} icon={iconoDefault}>
+                  <Popup>
+                    <div style={{ textAlign: 'center' }}>
+                      <p style={{ marginBottom: '8px', fontWeight: 'bold' }}>🔥 Foco activo</p>
+                      <p style={{ fontSize: '12px', color: '#666', marginBottom: '8px' }}>
+                        {alerta.lat.toFixed(5)}, {alerta.lon.toFixed(5)}
+                      </p>
+                      <button
+                        onClick={() => eliminarAlerta(alerta.id)}
+                        style={{
+                          background: '#cc3300',
+                          color: 'white',
+                          border: 'none',
+                          padding: '6px 12px',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                          fontSize: '13px',
+                        }}
+                      >
+                        ✕ Quitar foco
+                      </button>
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+            </MapContainer>
+          </div>
+        </div>
+
         <div className="actions">
           <button className="btn-secondary" onClick={handleLimpiar} disabled={loading}>
             ↺ Limpiar
           </button>
           <button className="btn-primary" onClick={handleGenerarReporte} disabled={loading}>
-             {loading ? 'Enviando...' : 'Generar reporte'}
+            {loading ? 'Enviando...' : 'Generar reporte'}
           </button>
         </div>
 
