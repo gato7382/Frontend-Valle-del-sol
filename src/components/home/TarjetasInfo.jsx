@@ -1,6 +1,6 @@
 import React from 'react';
 import img1 from '../img/1.png';
-import imgGemini from '../img/Gemini_Generated_Image_q6eww4q6eww4q6ew.png';
+import imgGemini from '../img/a.png';
 import imgNose from '../img/nose.jpeg';
 
 const noticias = [
