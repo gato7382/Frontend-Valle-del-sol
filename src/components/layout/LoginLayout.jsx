@@ -1,41 +1,41 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext"; // 1. Importamos el hook de autenticación
 import "../styles/Login.css";
 
 export default function LoginLayout() {
   const navigate = useNavigate();
+  const { login, error: authError } = useAuth(); // 2. Obtenemos la función login y el estado de error del contexto
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPwd, setShowPwd] = useState(false);
   const [remember, setRemember] = useState(false);
-  const [msg, setMsg] = useState({ text: "", type: "" });
 
-  function showMsg(text, type) {
-    setMsg({ text, type });
-    setTimeout(() => setMsg({ text: "", type: "" }), 3500);
-  }
-
-  function handleLogin() {  
-    if (!email) return showMsg("Por favor ingresa tu correo.", "error");
-    if (!email.includes("@")) return showMsg("El correo no parece válido.", "error");
-    if (!password) return showMsg("Por favor ingresa tu contraseña.", "error");
-    if (password.length < 6) return showMsg("La contraseña debe tener al menos 6 caracteres.", "error");
-    showMsg("¡Inicio de sesión exitoso!", "success");
-    navigate("/");
-  }
+  // 3. Modificamos la función para que sea asíncrona y use el contexto
+  const handleLogin = async () => {
+    try {
+      await login(email, password); // Llama a la función del contexto
+      navigate("/"); // Si tiene éxito, navega a la página principal
+    } catch (err) {
+      // El error ya se maneja y se muestra a través de `authError`
+      console.error("Error en el inicio de sesión:", err.message);
+    }
+  };
 
   return (
     <div className="login-wrap">
       <div className="login-card">
-        <div className="login-logo">hola mundo </div>
+        <div className="login-logo">Valle del Sol</div>
 
         <p className="login-title">Bienvenido de vuelta</p>
         <p className="login-sub">Ingresa tus datos para continuar</p>
 
-        {msg.text && <div className={`msg ${msg.type}`}>{msg.text}</div>}
+        {/* 4. Mostramos el error que viene del contexto */}
+        {authError && <div className="msg error">{authError}</div>}
 
         <div className="field">
-          <label htmlFor="email"> Coreo electrónico</label>
+          <label htmlFor="email">Correo electrónico</label>
           <input
             type="email"
             id="email"
@@ -51,7 +51,7 @@ export default function LoginLayout() {
             <input
               type={showPwd ? "text" : "password"}
               id="password"
-              placeholder="inhresa tu contraseña"
+              placeholder="ingresa tu contraseña"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -61,7 +61,7 @@ export default function LoginLayout() {
               onClick={() => setShowPwd(!showPwd)}
               aria-label={showPwd ? "Ocultar contraseña" : "Mostrar contraseña"}
             >
-              {showPwd ? "Ocultar " : "Ocultar "}
+              {showPwd ? "Ocultar" : "Mostrar"}
             </button>
           </div>
         </div>
@@ -75,7 +75,7 @@ export default function LoginLayout() {
             />
             Recordarme
           </label>
-          <a href="#" className="forgot">¿Olvidaste tu contraseña??</a>
+          <a href="#" className="forgot">¿Olvidaste tu contraseña?</a>
         </div>
 
         <button type="button" className="btn-primary" onClick={handleLogin}>
