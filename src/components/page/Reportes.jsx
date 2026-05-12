@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import reporteService from '../../services/reporteService'
+import { useAuth } from '../../context/AuthContext'
 import '../styles/reportes.css'
 
 const initialState = {
@@ -12,6 +14,8 @@ const initialState = {
 
 export default function Reportes() {
   const [form, setForm] = useState(initialState)
+  const [loading, setLoading] = useState(false)
+  const { isAuthenticated } = useAuth() // Verificamos si hay usuario logueado
 
   useEffect(() => {
     const now = new Date()
@@ -38,35 +42,31 @@ export default function Reportes() {
     })
   }
 
-  const handleGenerarReporte = () => {
+  const handleGenerarReporte = async () => {
+    if (!isAuthenticated) {
+      alert('Debes iniciar sesión para generar un reporte.')
+      return
+    }
+
     if (!form.direccion.trim()) {
       alert('Por favor ingresa la dirección del incendio.')
       return
     }
 
-    const reporte = `
-===================================================
-   REPORTE OFICIAL DE INCENDIO
-   Cuerpo de Bomberos — Municipalidad Valle del Sol
-===================================================
-Fecha: ${form.fecha}          Hora: ${form.hora}
+    setLoading(true)
+    try {
+      // Llamamos al servicio para crear el reporte
+      const nuevoReporte = await reporteService.crearReporte(form)
 
-UBICACIÓN
-  Dirección : ${form.direccion}
-  Sector    : ${form.sector || '—'}
-  Referencia: ${form.referencia || '—'}
+      alert(`¡Reporte #${nuevoReporte.id} creado con éxito! Estado: ${nuevoReporte.estado}`)
+      handleLimpiar() // Limpiamos el formulario tras éxito
 
-OBSERVACIONES
-  ${form.observaciones || 'Sin observaciones adicionales.'}
-
-===================================================
-    `.trim()
-
-    const ventana = window.open('', '_blank')
-    ventana.document.write(
-      `<pre style="font-family:monospace;padding:2rem;white-space:pre-wrap;">${reporte}</pre>`
-    )
-    ventana.document.close()
+    } catch (error) {
+      console.error("Error al crear reporte:", error)
+      alert(error.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -131,11 +131,11 @@ OBSERVACIONES
         </div>
 
         <div className="actions">
-          <button className="btn-secondary" onClick={handleLimpiar}>
+          <button className="btn-secondary" onClick={handleLimpiar} disabled={loading}>
             ↺ Limpiar
           </button>
-          <button className="btn-primary" onClick={handleGenerarReporte}>
-             Generar reporte
+          <button className="btn-primary" onClick={handleGenerarReporte} disabled={loading}>
+             {loading ? 'Enviando...' : 'Generar reporte'}
           </button>
         </div>
 
