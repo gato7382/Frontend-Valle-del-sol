@@ -271,15 +271,30 @@ body {
 }
 
 .card-imagen {
-  padding: 24px;
+  height: 220px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   color: white;
+  padding: 16px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-imagen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+  z-index: 1;
 }
 
 .card-emoji {
   font-size: 1.6rem;
+  z-index: 2;
+  position: relative;
 }
 
 .card-fecha {
@@ -287,6 +302,8 @@ body {
   padding: 8px 14px;
   border-radius: 999px;
   font-size: 0.85rem;
+  z-index: 2;
+  position: relative;
 }
 
 .card-body {

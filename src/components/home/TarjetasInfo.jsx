@@ -1,11 +1,14 @@
 import React from 'react';
+import img1 from '../img/1.png';
+import imgGemini from '../img/Gemini_Generated_Image_q6eww4q6eww4q6ew.png';
+import imgNose from '../img/nose.jpeg';
 
 const noticias = [
   {
     id: 1,
     fecha: '222',
     emoji: '',
-    color: 'linear-gradient(135deg,#922B21,#C0392B)',
+    imagen: img1,
     titulo: 'a',
     resumen: 's',
   },
@@ -13,15 +16,15 @@ const noticias = [
     id: 2,
     fecha: '30-04-2026',
     emoji: '',
-    color: 'linear-gradient(135deg,#0D1B2A,#1a4a7a)',
-    titulo: 's',
-    resumen: 'aaaa.',
+    imagen: imgGemini,
+    titulo: 'el asda',
+    resumen: 'aaaaaaaaaaaaaa.',
   },
   {
     id: 3,
     fecha: '24-04-2026',
     emoji: '',
-    color: 'linear-gradient(135deg,#1a3a1a,#2d6a2d)',
+    imagen: imgNose,
     titulo: '',
     resumen: '.',
   },
@@ -39,7 +42,7 @@ export default function TarjetasInfo() {
       {/* Noticias */}
       {noticias.map((n) => (
         <div key={n.id} className="pepo-card">
-          <div className="card-imagen" style={{ background: n.color }}>
+          <div className="card-imagen" style={{ backgroundImage: `url(${n.imagen})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
             <span className="card-emoji">{n.emoji}</span>
             <span className="card-fecha">{n.fecha}</span>
           </div>
