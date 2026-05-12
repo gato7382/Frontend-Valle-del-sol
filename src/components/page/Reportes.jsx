@@ -3,9 +3,10 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaf
 import L from 'leaflet'
 import markerIcon from 'leaflet/dist/images/marker-icon.png'
 import markerShadow from 'leaflet/dist/images/marker-shadow.png'
+import reporteService from '../../services/reporteService'
+import { useAuth } from '../../context/AuthContext'
 import '../styles/reportes.css'
 
-// Fix obligatorio para que los markers aparezcan en Vite
 const iconoDefault = new L.Icon({
   iconUrl: markerIcon,
   shadowUrl: markerShadow,
@@ -13,7 +14,6 @@ const iconoDefault = new L.Icon({
   iconAnchor: [12, 41],
 })
 
-// Componente que escucha clicks en el mapa
 function ClickHandler({ onAgregar }) {
   useMapEvents({
     click(e) {
@@ -39,6 +39,8 @@ const initialState = {
 export default function Reportes() {
   const [form, setForm] = useState(initialState)
   const [alertas, setAlertas] = useState([])
+  const [loading, setLoading] = useState(false)
+  const { isAuthenticated } = useAuth()
 
   useEffect(() => {
     const now = new Date()
@@ -73,38 +75,27 @@ export default function Reportes() {
     setAlertas(prev => prev.filter(a => a.id !== id))
   }
 
-  const handleGenerarReporte = () => {
+  const handleGenerarReporte = async () => {
+    if (!isAuthenticated) {
+      alert('Debes iniciar sesión para generar un reporte.')
+      return
+    }
     if (!form.direccion.trim()) {
       alert('Por favor ingresa la dirección del incendio.')
       return
     }
 
-    const reporte = `
-===================================================
-   REPORTE OFICIAL DE INCENDIO
-   Cuerpo de Bomberos — Municipalidad Valle del Sol
-===================================================
-Fecha: ${form.fecha}          Hora: ${form.hora}
-
-UBICACIÓN
-  Dirección : ${form.direccion}
-  Sector    : ${form.sector || '—'}
-  Referencia: ${form.referencia || '—'}
-
-OBSERVACIONES
-  ${form.observaciones || 'Sin observaciones adicionales.'}
-
-FOCOS MARCADOS EN MAPA: ${alertas.length}
-${alertas.map((a, i) => `  Foco ${i + 1}: Lat ${a.lat.toFixed(5)}, Lon ${a.lon.toFixed(5)}`).join('\n')}
-
-===================================================
-    `.trim()
-
-    const ventana = window.open('', '_blank')
-    ventana.document.write(
-      `<pre style="font-family:monospace;padding:2rem;white-space:pre-wrap;">${reporte}</pre>`
-    )
-    ventana.document.close()
+    setLoading(true)
+    try {
+      const nuevoReporte = await reporteService.crearReporte(form)
+      alert(`¡Reporte #${nuevoReporte.id} creado con éxito! Estado: ${nuevoReporte.estado}`)
+      handleLimpiar()
+    } catch (error) {
+      console.error('Error al crear reporte:', error)
+      alert(error.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -178,7 +169,7 @@ ${alertas.map((a, i) => `  Foco ${i + 1}: Lat ${a.lat.toFixed(5)}, Lon ${a.lon.t
           </p>
           <div className="mapa-wrapper">
             <MapContainer
-              center={[-33.45, -70.65]}
+              center={[-33.6897, -71.2128]}
               zoom={13}
               style={{ height: '400px', width: '100%', borderRadius: '8px' }}
             >
@@ -188,11 +179,7 @@ ${alertas.map((a, i) => `  Foco ${i + 1}: Lat ${a.lat.toFixed(5)}, Lon ${a.lon.t
               />
               <ClickHandler onAgregar={agregarAlerta} />
               {alertas.map(alerta => (
-                <Marker
-                  key={alerta.id}
-                  position={[alerta.lat, alerta.lon]}
-                  icon={iconoDefault}
-                >
+                <Marker key={alerta.id} position={[alerta.lat, alerta.lon]} icon={iconoDefault}>
                   <Popup>
                     <div style={{ textAlign: 'center' }}>
                       <p style={{ marginBottom: '8px', fontWeight: 'bold' }}>🔥 Foco activo</p>
@@ -222,11 +209,11 @@ ${alertas.map((a, i) => `  Foco ${i + 1}: Lat ${a.lat.toFixed(5)}, Lon ${a.lon.t
         </div>
 
         <div className="actions">
-          <button className="btn-secondary" onClick={handleLimpiar}>
+          <button className="btn-secondary" onClick={handleLimpiar} disabled={loading}>
             ↺ Limpiar
           </button>
-          <button className="btn-primary" onClick={handleGenerarReporte}>
-            Generar reporte
+          <button className="btn-primary" onClick={handleGenerarReporte} disabled={loading}>
+            {loading ? 'Enviando...' : 'Generar reporte'}
           </button>
         </div>
 
