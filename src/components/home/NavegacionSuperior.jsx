@@ -1,15 +1,29 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Paso 1: Importar Link
+import { Link, useLocation } from 'react-router-dom';
 
 export default function NavegacionSuperior() {
+  const location = useLocation();
+
+  const links = [
+    { to: '/',          emoji: '🏠', label: 'Home' },
+    { to: '/reportes',  emoji: '🔥', label: 'Reportes' },
+    { to: '/mapa',      emoji: '🗺️', label: 'Mapa' },
+    { to: '/alertas',   emoji: '🛎️', label: 'Alertas' },
+    { to: '/bomberos',  emoji: '🧯', label: 'Bomberos' },
+  ];
+
   return (
     <nav className="tito-nav">
-      {/* Paso 2: Usar Link to="/" en lugar de a href="#" */}
-      <Link to="/">🚪 Home</Link>
-      <Link to="/reportes">🔥 Reportes</Link>
-      <Link to="/mapa">🗺️ Mapa</Link>
-      <Link to="/alertas">🛎️ Alertas</Link>
-      <Link to="/bomberos">🧯 Bomberos</Link>
+      {links.map(({ to, emoji, label }) => (
+        <Link
+          key={to}
+          to={to}
+          className={location.pathname === to ? 'nav-link active' : 'nav-link'}
+        >
+          <span className="nav-emoji">{emoji}</span>
+          <span>{label}</span>
+        </Link>
+      ))}
     </nav>
   );
 }

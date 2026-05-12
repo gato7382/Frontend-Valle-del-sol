@@ -3,6 +3,7 @@ import '../styles/styles.css'
 import { Outlet } from 'react-router-dom';
 import BarraSuperior from '../home/BarraSuperior'
 import NavegacionSuperior from '../home/NavegacionSuperior'
+import Footer from '../home/Footer'
 
 // Este componente ahora es el "Contenedor Padre" (Layout)
 export default function Home() {
@@ -25,6 +26,8 @@ export default function Home() {
           <Outlet />
         </main>
       </div>
+
+      <Footer />
     </div>
   )
 }
