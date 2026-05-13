@@ -79,7 +79,7 @@ export default function Alertas() {
                   backgroundColor: reporte.estado === 'ACTIVO' ? '#fff5f5' : '#f5fff5'
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' , color: '#000000'}}>
                   <div>
                     <h3 style={{ margin: '0 0 10px 0', color: '#e24b4a' }}>📍 {reporte.direccion}</h3>
                     <p><strong>Sector:</strong> {reporte.sector} | <strong>Fecha:</strong> {reporte.fecha} a las {reporte.hora}</p>
