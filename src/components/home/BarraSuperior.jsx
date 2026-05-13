@@ -18,7 +18,7 @@ export default function BarraSuperior() {
       <div className="topbar-left">
         <div className="tito-logo">
           <img
-            src="/imgs/Gemini_Generated_Image_sl7vb4sl7vb4sl7v (1).png"
+            src="src\components\img\Gemini_Generated_Image_ (1).png"
             alt="Logo Ganso Bombero"
           />
         </div>
@@ -41,7 +41,7 @@ export default function BarraSuperior() {
           </>
         ) : (
           <Link to="/login" className="btn-login">
-            <span className="icon-user">👤</span>
+            <span className="icon-user"></span>
             <span>Iniciar Sesión</span>
           </Link>
         )}

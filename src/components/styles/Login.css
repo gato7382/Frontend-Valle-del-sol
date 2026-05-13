@@ -17,15 +17,25 @@
 }
 
 .login-logo {
-  width: 48px;
-  height: 48px;
-  display: grid;
-  place-items: center;
+  /* Aumenté un poco el tamaño para que se aprecie el logo*/
+  width: 100px; 
+  height: 100px;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
   margin: 0 auto 1.5rem;
-  border-radius: 15px;
-  background: rgba(255, 255, 255, 0.07);
-  color: #ffffff;
-  font-size: 1.2rem;
+
+  overflow: hidden; 
+
+}
+
+.login-logo img {
+  width: 200%;
+  height: 200%;
+  object-fit: contain; /* Esto evita que el logo se estire feo */
+  padding: 4px;        /* Espacio interno para que el logo no toque los bordes */
 }
 
 .login-title {
