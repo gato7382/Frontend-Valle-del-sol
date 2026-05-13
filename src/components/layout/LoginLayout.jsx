@@ -26,7 +26,12 @@ export default function LoginLayout() {
   return (
     <div className="login-wrap">
       <div className="login-card">
-        <div className="login-logo">Valle del Sol</div>
+        <div className="login-logo">
+          <img
+            src="src\components\img\Gemini_Generated_Image_ (1).png"
+            alt="Logo"
+          />
+          </div>
 
         <p className="login-title">Bienvenido de vuelta</p>
         <p className="login-sub">Ingresa tus datos para continuar</p>
