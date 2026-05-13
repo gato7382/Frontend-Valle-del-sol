@@ -6,27 +6,27 @@ import imgNose from '../img/nose.jpeg';
 const noticias = [
   {
     id: 1,
-    fecha: '222',
+    fecha: '10-05-2026',
     emoji: '',
     imagen: img1,
-    titulo: 'a',
-    resumen: 's',
+    titulo: 'Alianzas que Salvan Vidas',
+    resumen: 'Una mirada a la gestión administrativa y el apoyo empresarial fundamentales para financiar el equipamiento de vanguardia que utilizan nuestros bomberos',
   },
   {
     id: 2,
     fecha: '30-04-2026',
     emoji: '',
     imagen: imgGemini,
-    titulo: 'el asda',
-    resumen: 'aaaaaaaaaaaaaa.',
+    titulo: 'Innovación en el Combate de Incendios',
+    resumen: 'El cuerpo de bomberos integra nuevas tecnologías y robótica avanzada para enfrentar emergencias de alta complejidad, garantizando mayor seguridad y eficiencia.',
   },
   {
     id: 3,
     fecha: '24-04-2026',
     emoji: '',
     imagen: imgNose,
-    titulo: '',
-    resumen: '.',
+    titulo: 'Héroes de Nuestra Comunidad',
+    resumen: 'Detrás de cada uniforme hay una historia de compromiso y valentía. Conoce la labor diaria de quienes arriesgan todo para proteger a los ciudadanos..',
   },
 ];
 
