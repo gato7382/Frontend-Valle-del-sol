@@ -1,6 +1,8 @@
 ﻿import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext"; // 1. Importamos el hook
+import BarraSuperior from "../home/BarraSuperior";
+import NavegacionSuperior from "../home/NavegacionSuperior";
 import "../styles/Register.css";
 
 export default function Register() {
@@ -70,12 +72,19 @@ export default function Register() {
   };
 
   return (
-    <div className="reg-wrap">
-      <div className="reg-card">
+    <div className="home-layout">
+      <header>
+        <BarraSuperior />
+      </header>
+      <div className="app-body">
+        <NavegacionSuperior />
+        <main className="main-content auth-page">
+          <div className="reg-wrap auth-wrap">
+            <div className="reg-card">
 
-        <div className="reg-logo">Valle del Sol</div>
-        <p className="reg-title">Crea tu cuenta</p>
-        <p className="reg-sub">Completa los datos para comenzar</p>
+              <div className="reg-logo">Valle del Sol</div>
+              <p className="reg-title">Crea tu cuenta</p>
+              <p className="reg-sub">Completa los datos para comenzar</p>
 
         {msg.text && <div className={`msg ${msg.type}`}>{msg.text}</div>}
 
@@ -161,6 +170,9 @@ export default function Register() {
           ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
         </p>
 
+            </div>
+          </div>
+        </main>
       </div>
     </div>
   );

@@ -4,16 +4,39 @@
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  background: radial-gradient(circle at top, rgba(95, 103, 255, 0.12), transparent 32%), #0f1118;
+  background: radial-gradient(circle at top, rgba(95, 103, 255, 0.18), transparent 28%), #0f172a;
 }
 
 .login-card {
   width: min(420px, 100%);
-  background: #171921;
+  background: #10203a;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 28px;
   box-shadow: 0 32px 90px rgba(0, 0, 0, 0.35);
   padding: 2rem 1.75rem;
+}
+
+.main-content.auth-page {
+  background: #0f172a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 84px);
+  padding: 0;
+}
+
+.auth-wrap {
+  width: 100%;
+  min-height: calc(100vh - 84px);
+  background: #0f172a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0;
+}
+
+.main-content.auth-page .login-wrap {
+  min-height: auto;
 }
 
 .login-logo {

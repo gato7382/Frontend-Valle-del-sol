@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext"; // 1. Importamos el hook de autenticación
+import BarraSuperior from "../home/BarraSuperior";
+import NavegacionSuperior from "../home/NavegacionSuperior";
 import "../styles/Login.css";
 
 export default function LoginLayout() {
@@ -24,72 +26,82 @@ export default function LoginLayout() {
   };
 
   return (
-    <div className="login-wrap">
-      <div className="login-card">
-        <div className="login-logo">
-          <img
-            src="src\components\img\Gemini_Generated_Image_ (1).png"
-            alt="Logo"
-          />
+    <div className="home-layout">
+      <header>
+        <BarraSuperior />
+      </header>
+      <div className="app-body">
+        <NavegacionSuperior />
+        <main className="main-content auth-page">
+          <div className="login-wrap auth-wrap">
+            <div className="login-card">
+              <div className="login-logo">
+                <img
+                  src="src\components\img\Gemini_Generated_Image_ (1).png"
+                  alt="Logo"
+                />
+              </div>
+
+              <p className="login-title">Bienvenido de vuelta</p>
+              <p className="login-sub">Ingresa tus datos para continuar</p>
+
+              {/* 4. Mostramos el error que viene del contexto */}
+              {authError && <div className="msg error">{authError}</div>}
+
+              <div className="field">
+                <label htmlFor="email">Correo electrónico</label>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="tucorreo@gmail.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+
+              <div className="field">
+                <label htmlFor="password">Contraseña</label>
+                <div className="input-wrap">
+                  <input
+                    type={showPwd ? "text" : "password"}
+                    id="password"
+                    placeholder="ingresa tu contraseña"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    className="eye"
+                    onClick={() => setShowPwd(!showPwd)}
+                    aria-label={showPwd ? "Ocultar contraseña" : "Mostrar contraseña"}
+                  >
+                    {showPwd ? "Ocultar" : "Mostrar"}
+                  </button>
+                </div>
+              </div>
+
+              <div className="row-between">
+                <label className="check-label">
+                  <input
+                    type="checkbox"
+                    checked={remember}
+                    onChange={(e) => setRemember(e.target.checked)}
+                  />
+                  Recordarme
+                </label>
+                <a href="#" className="forgot">¿Olvidaste tu contraseña?</a>
+              </div>
+
+              <button type="button" className="btn-primary" onClick={handleLogin}>
+                Iniciar sesión
+              </button>
+
+              <p className="signup-row">
+                ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
+              </p>
+            </div>
           </div>
-
-        <p className="login-title">Bienvenido de vuelta</p>
-        <p className="login-sub">Ingresa tus datos para continuar</p>
-
-        {/* 4. Mostramos el error que viene del contexto */}
-        {authError && <div className="msg error">{authError}</div>}
-
-        <div className="field">
-          <label htmlFor="email">Correo electrónico</label>
-          <input
-            type="email"
-            id="email"
-            placeholder="tucorreo@gmail.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-
-        <div className="field">
-          <label htmlFor="password">Contraseña</label>
-          <div className="input-wrap">
-            <input
-              type={showPwd ? "text" : "password"}
-              id="password"
-              placeholder="ingresa tu contraseña"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button
-              type="button"
-              className="eye"
-              onClick={() => setShowPwd(!showPwd)}
-              aria-label={showPwd ? "Ocultar contraseña" : "Mostrar contraseña"}
-            >
-              {showPwd ? "Ocultar" : "Mostrar"}
-            </button>
-          </div>
-        </div>
-
-        <div className="row-between">
-          <label className="check-label">
-            <input
-              type="checkbox"
-              checked={remember}
-              onChange={(e) => setRemember(e.target.checked)}
-            />
-            Recordarme
-          </label>
-          <a href="#" className="forgot">¿Olvidaste tu contraseña?</a>
-        </div>
-
-        <button type="button" className="btn-primary" onClick={handleLogin}>
-          Iniciar sesión
-        </button>
-
-        <p className="signup-row">
-          ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
-        </p>
+        </main>
       </div>
     </div>
   );
