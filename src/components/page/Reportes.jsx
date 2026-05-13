@@ -7,6 +7,7 @@ import reporteService from '../../services/reporteService'
 import { useAuth } from '../../context/AuthContext'
 import '../styles/reportes.css'
 
+// Configuración del icono de Leaflet
 const iconoDefault = new L.Icon({
   iconUrl: markerIcon,
   shadowUrl: markerShadow,
@@ -14,14 +15,11 @@ const iconoDefault = new L.Icon({
   iconAnchor: [12, 41],
 })
 
-function ClickHandler({ onAgregar }) {
+// Componente para capturar el clic en el mapa
+function ClickHandler({ onUbicacionSeleccionada }) {
   useMapEvents({
     click(e) {
-      onAgregar({
-        id: Date.now(),
-        lat: e.latlng.lat,
-        lon: e.latlng.lng,
-      })
+      onUbicacionSeleccionada(e.latlng.lat, e.latlng.lng);
     }
   })
   return null
@@ -34,14 +32,16 @@ const initialState = {
   sector: '',
   referencia: '',
   observaciones: '',
+  latitud: null,
+  longitud: null
 }
 
 export default function Reportes() {
   const [form, setForm] = useState(initialState)
-  const [alertas, setAlertas] = useState([])
   const [loading, setLoading] = useState(false)
   const { isAuthenticated } = useAuth()
 
+  // Efecto para inicializar fecha y hora actual
   useEffect(() => {
     const now = new Date()
     const pad = n => String(n).padStart(2, '0')
@@ -57,6 +57,16 @@ export default function Reportes() {
     setForm(prev => ({ ...prev, [name]: value }))
   }
 
+  // Maneja la selección de ubicación (solo permite una a la vez)
+  const handleUbicacion = (lat, lon) => {
+    setForm(prev => ({
+      ...prev,
+      latitud: lat,
+      longitud: lon,
+      direccion: `Ubicación GPS: ${lat.toFixed(6)}, ${lon.toFixed(6)}`
+    }));
+  }
+
   const handleLimpiar = () => {
     const now = new Date()
     const pad = n => String(n).padStart(2, '0')
@@ -67,32 +77,25 @@ export default function Reportes() {
     })
   }
 
-  const agregarAlerta = (nueva) => {
-    setAlertas(prev => [...prev, nueva])
-  }
-
-  const eliminarAlerta = (id) => {
-    setAlertas(prev => prev.filter(a => a.id !== id))
-  }
-
   const handleGenerarReporte = async () => {
     if (!isAuthenticated) {
       alert('Debes iniciar sesión para generar un reporte.')
       return
     }
-    if (!form.direccion.trim()) {
-      alert('Por favor ingresa la dirección del incendio.')
+    if (!form.latitud || !form.longitud) {
+      alert('Por favor, selecciona la ubicación exacta en el mapa.')
       return
     }
 
     setLoading(true)
     try {
+      // Enviamos el objeto 'form' que ya incluye latitud y longitud
       const nuevoReporte = await reporteService.crearReporte(form)
-      alert(`¡Reporte #${nuevoReporte.id} creado con éxito! Estado: ${nuevoReporte.estado}`)
+      alert(`¡Reporte #${nuevoReporte.id} creado con éxito!`)
       handleLimpiar()
     } catch (error) {
       console.error('Error al crear reporte:', error)
-      alert(error.message)
+      alert(error.message || 'Error al conectar con el servidor')
     } finally {
       setLoading(false)
     }
@@ -101,27 +104,33 @@ export default function Reportes() {
   return (
     <div className="page">
       <div className="container">
-
+        
         <div className="header">
           <div>
             <p className="header-title">Nuevo reporte de incendio</p>
-            <p className="header-sub">Cuerpo de Bomberos — Municipalidad Valle del Sol</p>
+            <p className="header-sub">Cuerpo de Bomberos — Valle del Sol</p>
+          </div>
+        </div>
+
+        <div className="grid-2">
+          <div className="field">
+            <label>Fecha</label>
+            <input type="date" name="fecha" value={form.fecha} onChange={handleChange} />
+          </div>
+          <div className="field">
+            <label>Hora del incidente</label>
+            <input type="time" name="hora" value={form.hora} onChange={handleChange} />
           </div>
         </div>
 
         <div className="field">
-          <label>Hora del incidente</label>
-          <input type="time" name="hora" value={form.hora} onChange={handleChange} />
-        </div>
-
-        <div className="field">
-          <label>📍 Dirección del incendio</label>
+          <label>📍 Dirección / Coordenadas</label>
           <input
             type="text"
             name="direccion"
             value={form.direccion}
             onChange={handleChange}
-            placeholder="Ej: Av. Principal 1234, Villa Valle del Sol"
+            placeholder="Haz clic en el mapa para marcar la ubicación"
           />
         </div>
 
@@ -133,7 +142,7 @@ export default function Reportes() {
               name="sector"
               value={form.sector}
               onChange={handleChange}
-              placeholder="Sector o barrio"
+              placeholder="Ej: Sector Norte"
             />
           </div>
           <div className="field">
@@ -143,7 +152,7 @@ export default function Reportes() {
               name="referencia"
               value={form.referencia}
               onChange={handleChange}
-              placeholder="Punto de referencia"
+              placeholder="Ej: Frente al colegio"
             />
           </div>
         </div>
@@ -155,55 +164,35 @@ export default function Reportes() {
             value={form.observaciones}
             onChange={handleChange}
             rows={3}
-            placeholder="Descripción del estado actual, materiales involucrados, condiciones del lugar..."
+            placeholder="Detalles del incidente..."
           />
         </div>
 
-        {/* ── MAPA ── */}
         <div className="field">
-          <label>🗺️ Mapa de focos — haz clic para marcar, abre el marcador para quitar</label>
-          <p className="mapa-hint">
-            {alertas.length === 0
-              ? 'Sin focos marcados aún.'
-              : `${alertas.length} foco(s) activo(s) en el mapa.`}
-          </p>
+          <label>🗺️ Mapa de ubicación (Haz clic para posicionar el foco)</label>
           <div className="mapa-wrapper">
             <MapContainer
               center={[-33.6897, -71.2128]}
               zoom={13}
-              style={{ height: '400px', width: '100%', borderRadius: '8px' }}
+              style={{ height: '350px', width: '100%', borderRadius: '12px', border: '2px solid #333' }}
             >
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; OpenStreetMap contributors'
+                attribution='&copy; OpenStreetMap'
               />
-              <ClickHandler onAgregar={agregarAlerta} />
-              {alertas.map(alerta => (
-                <Marker key={alerta.id} position={[alerta.lat, alerta.lon]} icon={iconoDefault}>
+              
+              <ClickHandler onUbicacionSeleccionada={handleUbicacion} />
+
+              {/* Solo renderiza el marcador si hay coordenadas seleccionadas */}
+              {form.latitud && form.longitud && (
+                <Marker position={[form.latitud, form.longitud]} icon={iconoDefault}>
                   <Popup>
-                    <div style={{ textAlign: 'center' }}>
-                      <p style={{ marginBottom: '8px', fontWeight: 'bold' }}>🔥 Foco activo</p>
-                      <p style={{ fontSize: '12px', color: '#666', marginBottom: '8px' }}>
-                        {alerta.lat.toFixed(5)}, {alerta.lon.toFixed(5)}
-                      </p>
-                      <button
-                        onClick={() => eliminarAlerta(alerta.id)}
-                        style={{
-                          background: '#cc3300',
-                          color: 'white',
-                          border: 'none',
-                          padding: '6px 12px',
-                          borderRadius: '4px',
-                          cursor: 'pointer',
-                          fontSize: '13px',
-                        }}
-                      >
-                        ✕ Quitar foco
-                      </button>
-                    </div>
+                    <strong>Foco del incendio</strong> <br />
+                    Lat: {form.latitud.toFixed(4)} <br />
+                    Lon: {form.longitud.toFixed(4)}
                   </Popup>
                 </Marker>
-              ))}
+              )}
             </MapContainer>
           </div>
         </div>
@@ -213,7 +202,7 @@ export default function Reportes() {
             ↺ Limpiar
           </button>
           <button className="btn-primary" onClick={handleGenerarReporte} disabled={loading}>
-            {loading ? 'Enviando...' : 'Generar reporte'}
+            {loading ? 'Procesando...' : 'Generar Reporte'}
           </button>
         </div>
 
