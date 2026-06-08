@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 import authService from '../services/authService';
 
 // Crear el contexto
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 // Hook personalizado para usar el contexto
 export const useAuth = () => {
