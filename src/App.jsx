@@ -6,6 +6,7 @@ import Register from './components/layout/RegistroLayout.jsx';
 import Reportes from './components/page/Reportes.jsx';
 import Alertas from './components/page/Alertas.jsx';
 import Mapa from './components/page/Mapa.jsx';
+import Bomberos from './components/page/Bomberos.jsx';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route path="reportes" element={<Reportes />} />
           <Route path="mapa" element={<Mapa />} />
           <Route path="alertas" element={<Alertas />} />
-          <Route path="bomberos" element={<div style={{padding: '40px'}}><h2>🧯 Personal de Bomberos</h2><p>Gestión de voluntarios.</p></div>} />
+          <Route path="bomberos" element={<Bomberos />} />
         </Route>
       </Routes>
     </Router>

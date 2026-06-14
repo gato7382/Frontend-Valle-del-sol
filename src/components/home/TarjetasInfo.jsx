@@ -1,5 +1,5 @@
 import React from 'react';
-import img1 from '../img/1.png';
+import img1 from '../img/card-1.png';
 import imgGemini from '../img/a.png';
 import imgNose from '../img/nose.jpeg';
 
