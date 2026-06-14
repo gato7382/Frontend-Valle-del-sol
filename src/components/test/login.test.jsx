@@ -28,6 +28,7 @@ describe('LoginLayout', () => {
     mockNavigate.mockReset();
   });
 
+  // Verifica que el formulario de login envíe las credenciales correctas y navegue después de iniciar sesión.
   it('envía el correo y la contraseña al iniciar sesión', async () => {
     render(
       <MemoryRouter>

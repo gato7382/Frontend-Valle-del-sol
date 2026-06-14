@@ -39,6 +39,7 @@ describe("Registro", () => {
     );
   };
 
+  // Verifica que el formulario de registro muestre todos los campos necesarios y el botón de crear cuenta.
   test("muestra los campos del formulario y el botón de crear cuenta", () => {
     renderRegister();
 
@@ -50,6 +51,7 @@ describe("Registro", () => {
     expect(screen.getByRole("button", { name: /Crear cuenta/i })).toBeTruthy();
   });
 
+  // Comprueba que el componente muestre un error si las contraseñas no coinciden.
   test("muestra mensaje de error cuando las contraseñas no coinciden", async () => {
     const { container } = renderRegister();
     const form = within(container);
@@ -66,6 +68,7 @@ describe("Registro", () => {
     expect(mockRegister).not.toHaveBeenCalled();
   });
 
+  // Simula un registro exitoso y comprueba que se llame al servicio y se redirija a la página principal.
   test("registra con éxito y navega a la página principal", async () => {
     mockRegister.mockResolvedValue({ token: "fake-token", user: { nombre: "Juan Pérez" } });
 
@@ -92,6 +95,7 @@ describe("Registro", () => {
     );
   });
 
+  // Valida que el mensaje de error del contexto se muestre cuando hay un problema de autenticación.
   test("muestra el error del contexto de autenticación", () => {
     renderRegister("Correo ya registrado");
 
