@@ -89,9 +89,16 @@ export default function Reportes() {
 
     setLoading(true)
     try {
-      // Enviamos el objeto 'form' que ya incluye latitud y longitud
-      const nuevoReporte = await reporteService.crearReporte(form)
-      alert(`¡Reporte #${nuevoReporte.id} creado con éxito!`)
+      const datosAEnviar = {
+        fecha: form.fecha,
+        hora: form.hora.length === 5 ? form.hora + ':00' : form.hora,
+        direccion: form.direccion,
+        sector: form.sector,
+        referencia: form.referencia,
+        observaciones: form.observaciones,
+      }
+      console.log('Body enviado:', JSON.stringify(datosAEnviar))
+      const nuevoReporte = await reporteService.crearReporte(datosAEnviar)
       handleLimpiar()
     } catch (error) {
       console.error('Error al crear reporte:', error)
