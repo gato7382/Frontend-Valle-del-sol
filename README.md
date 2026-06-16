@@ -1,16 +1,122 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+bash
+# 1. Instalar dependencias
+npm install
 
-Currently, two official plugins are available:
+# 2. Ejecutar en desarrollo
+npm run dev
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+# 3. Abrir en el navegador
+http://localhost:5173
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+Antes de Empezar
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Necesitas tener instalado:
+
+-**Node.js** v16+ ([Descargar aquí](https://nodejs.org/))
+- **npm** (viene con Node.js)
+
+Verifica tu instalación
+
+node -v    # Debe mostrar v16 o superior
+npm -v     # Debe mostrar versión
+```
+
+
+
+ Instalación Completa
+
+ Paso 1: Descargar el proyecto
+bash
+cd Frontend-Valle-del-sol
+```
+
+### Paso 2: Instalar todas las dependencias
+bash
+npm install
+
+
+**Esto instalará:**
+- React 19 & React DOM
+- React Router para navegación
+- Bootstrap 5 para estilos
+- Leaflet para mapas interactivos
+- Axios para peticiones HTTP
+- Vitest para testing
+- ESLint para validar código
+
+
+
+Comandos Principales
+
+
+npm run dev
+
+- Abre: http://localhost:5173
+- Recarga automática al guardar cambios
+- Perfecto para desarrollo
+
+ Testing
+
+npm test
+
+- Ejecuta todas las pruebas
+- Archivos de test: `src/components/test/*.test.jsx`
+
+### Construir para Producción
+```bash
+npm run build
+```
+- Crea carpeta `dist/` optimizada
+- Archivo lista para desplegar
+
+### Vista Previa de Producción
+```bash
+npm run build
+npm run preview
+```
+- Ve cómo se vería en producción
+
+### Validar Código
+```bash
+npm run lint
+```
+- Encuentra errores de código
+- `npm run lint -- --fix` arregla automáticamente
+
+
+Estructura del Proyecto
+
+```
+src/
+├── components/
+│   ├── home/              ← Componentes de inicio
+│   ├── page/              ← Páginas principales
+│   ├── layout/            ← Layouts (Login, Registro)
+│   ├── img/               ← Imágenes del proyecto
+│   └── styles/            ← Archivos CSS
+├── services/              ← Conexión con API
+│   ├── api.js            ← Cliente HTTP
+│   ├── authService.js    ← Autenticación
+│   ├── adminService.js   ← Admin
+│   └── reporteService.js ← Reportes
+├── context/               ← Estado global (Auth)
+├── App.jsx               ← Componente principal
+├── main.jsx              ← Punto de entrada
+└── index.css             ← Estilos globales
+```
+
+
+ Testing
+**Archivos de test disponibles:**
+- Alertas.test.jsx
+- login.test.jsx  
+- Registro.test.jsx
+- Reportes.test.jsx
+
+
+
+
+
