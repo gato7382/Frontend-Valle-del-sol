@@ -9,7 +9,10 @@ export default function Inicio() {
     <div className="inicio-page">
       <Principal />
       <div className="nose-contenido">
-        <TarjetasInfo />
+        <section className="seccion-noticias">
+          <h2 className="seccion-noticias-titulo">Últimas noticias</h2>
+          <TarjetasInfo />
+        </section>
         <CajaTexto />
       </div>
     </div>

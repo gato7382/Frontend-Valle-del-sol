@@ -53,20 +53,22 @@ export default function TarjetasInfo() {
           </div>
         </div>
       ))}
-
-      {/* Accesos rápidos */}
-      <div className="accesos-rapidos">
-        {accesosRapidos.map((a, i) => (
-          <button key={i} type="button" className={`acceso-btn acceso-btn--${i}`}>
-            <span className="acceso-texto">
-              {a.label.split('\n').map((line, j) => (
-                <span key={j}>{line}<br /></span>
-              ))}
-            </span>
-            <span className="acceso-icono">{a.emoji}</span>
-          </button>
-        ))}
-      </div>
+      {/* Accesos rápidos / Instituciones relacionadas */}
+      <section className="seccion-instituciones">
+        <h4 className="seccion-instituciones-titulo">INSTITUCIONES RELACIONADAS</h4>
+        <div className="accesos-rapidos">
+          {accesosRapidos.map((a, i) => (
+            <button key={i} type="button" className={`acceso-btn acceso-btn--${i}`}>
+              <span className="acceso-texto">
+                {a.label.split('\n').map((line, j) => (
+                  <span key={j}>{line}<br /></span>
+                ))}
+              </span>
+              <span className="acceso-icono">{a.emoji}</span>
+            </button>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="footer-grid">
         <div className="footer-column footer-contact">
-         
+          <h4>Contacto</h4>
           <p>General del Canto 135, Providencia - Stgo</p>
           <p>Fono: +56 9 8165 4943</p>
         </div>
