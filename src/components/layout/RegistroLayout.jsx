@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext"; // 1. Importamos el hook
 import BarraSuperior from "../home/BarraSuperior";
 import NavegacionSuperior from "../home/NavegacionSuperior";
+import logo from "../img/Gemini_Generated_Image_ (1).png";
 import "../styles/Register.css";
 
 export default function Register() {
@@ -82,7 +83,9 @@ export default function Register() {
           <div className="reg-wrap auth-wrap">
             <div className="reg-card">
 
-              <div className="reg-logo">Valle del Sol</div>
+              <div className="reg-logo">
+                <img src={logo} alt="Logo Cuerpo de Bomberos Valle del Sol" />
+              </div>
               <p className="reg-title">Crea tu cuenta</p>
               <p className="reg-sub">Completa los datos para comenzar</p>
 

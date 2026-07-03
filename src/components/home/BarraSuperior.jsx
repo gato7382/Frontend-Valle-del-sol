@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import logo from '../img/Gemini_Generated_Image_ (1).png';
 
 export default function BarraSuperior() {
   const { isAuthenticated, logout, user } = useAuth();
@@ -17,10 +18,7 @@ export default function BarraSuperior() {
       {/* LADO IZQUIERDO: Logo y Títulos */}
       <div className="topbar-left">
         <div className="tito-logo">
-          <img
-            src="src\components\img\Gemini_Generated_Image_ (1).png"
-            alt="Logo Ganso Bombero"
-          />
+          <img src={logo} alt="Logo Cuerpo de Bomberos Valle del Sol" />
         </div>
         <div className="topbar-titulo">
           <h1>Profesionales de la Emergencia</h1>

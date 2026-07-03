@@ -46,8 +46,8 @@ body {
 }
 
 .tito-logo img { 
-  width: 170%; 
-  height: 170%; 
+  width: 100%; 
+  height: auto; 
   object-fit: contain; 
 }
 

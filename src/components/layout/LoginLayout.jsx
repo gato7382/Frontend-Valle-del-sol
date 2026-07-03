@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext"; // 1. Importamos el hook de autenticación
 import BarraSuperior from "../home/BarraSuperior";
 import NavegacionSuperior from "../home/NavegacionSuperior";
+import logo from "../img/Gemini_Generated_Image_ (1).png";
 import "../styles/Login.css";
 
 export default function LoginLayout() {
@@ -36,12 +37,8 @@ export default function LoginLayout() {
           <div className="login-wrap auth-wrap">
             <div className="login-card">
               <div className="login-logo">
-                <img
-                  src="src\components\img\Gemini_Generated_Image_ (1).png"
-                  alt="Logo"
-                />
+                <img src={logo} alt="Logo Cuerpo de Bomberos Valle del Sol" />
               </div>
-
               <p className="login-title">Bienvenido de vuelta</p>
               <p className="login-sub">Ingresa tus datos para continuar</p>
 
