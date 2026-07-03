@@ -2,6 +2,9 @@ import React from 'react';
 import img1 from '../img/card-1.png';
 import imgGemini from '../img/a.png';
 import imgNose from '../img/nose.jpeg';
+import img4 from '../img/1.png';
+import img5 from '../img/2.png';
+import img6 from '../img/3.png';
 
 const noticias = [
   {
@@ -27,6 +30,30 @@ const noticias = [
     imagen: imgNose,
     titulo: 'Héroes de Nuestra Comunidad',
     resumen: 'Detrás de cada uniforme hay una historia de compromiso y valentía. Conoce la labor diaria de quienes arriesgan todo para proteger a los ciudadanos..',
+  },
+  {
+    id: 4,
+    fecha: '18-06-2026',
+    emoji: '',
+    imagen: img4,
+    titulo: 'Entrenamiento Avanzado en Rescate',
+    resumen: 'Nuestros bomberos participan en programas intensivos de capacitación para dominar técnicas de rescate en alturas y operaciones en espacios confinados.',
+  },
+  {
+    id: 5,
+    fecha: '12-06-2026',
+    emoji: '',
+    imagen: img5,
+    titulo: 'Prevención de Emergencias en la Comunidad',
+    resumen: 'Realizamos jornadas educativas en escuelas y comercios para enseñar medidas de seguridad y prevención de desastres que protegen a nuestros ciudadanos.',
+  },
+  {
+    id: 6,
+    fecha: '05-06-2026',
+    emoji: '',
+    imagen: img6,
+    titulo: 'Vehículos Especializados de Última Generación',
+    resumen: 'Contamos con una flota moderna de unidades especializadas equipadas con la más avanzada tecnología para responder efectivamente a cualquier tipo de emergencia.',
   },
 ];
 
