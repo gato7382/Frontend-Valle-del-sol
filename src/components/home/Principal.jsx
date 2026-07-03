@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import heroImage1 from '../img/hero/222.png';
 import heroImage2 from '../img/hero/hero-2.png';
 
 export default function Principal() {
-  const images = [heroImage1, heroImage2];
+  const images = [heroImage2];
   const [currentImage, setCurrentImage] = useState(0);
 
   useEffect(() => {
